@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loansData } from "../Data/loans";
 import { toast } from "react-toastify";
-import "../Styles/dashboard.css";
+import "../styles/dashboard.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("loggedUser"));
 
+  /* filters */
   const [search, setSearch] = useState("");
   const [loanType, setLoanType] = useState("");
   const [status, setStatus] = useState("");
@@ -15,8 +16,13 @@ const Dashboard = () => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
 
+  /* dark mode */
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true";
+  });
+
   if (!user) {
-    return <h2>Please login</h2>;
+    return <h2>Please login again</h2>;
   }
 
   const logout = () => {
@@ -25,12 +31,22 @@ const Dashboard = () => {
     navigate("/");
   };
 
+  const toggleDarkMode = () => {
+    const value = !darkMode;
+    setDarkMode(value);
+    localStorage.setItem("darkMode", value);
+  };
+
+ 
   const filteredLoans = [];
 
   for (let i = 0; i < loansData.length; i++) {
     const loan = loansData[i];
 
-    if (search && !loan.customerName.toLowerCase().includes(search.toLowerCase())) {
+    if (
+      search &&
+      !loan.customerName.toLowerCase().includes(search.toLowerCase())
+    ) {
       continue;
     }
 
@@ -58,98 +74,106 @@ const Dashboard = () => {
   }
 
   return (
-  <div className="dashboard-page">
-    {/* HEADER */}
-    <div className="dashboard-header">
-      <h2>Welcome, {user.name}</h2>
-      <button className="logout-btn" onClick={logout}>Logout</button>
-    </div>
+    <div className={darkMode ? "dashboard-page dark" : "dashboard-page"}>
+      {/* HEADER */}
+      <div className="dashboard-header">
+        <h2>Welcome, {user.name}</h2>
 
-    {/* FILTERS */}
-    <div className="filters">
-      <input
-        placeholder="Search Name"
-        onChange={(e) => setSearch(e.target.value)}
-      />
+        <div>
+          <button className="dark-btn" onClick={toggleDarkMode}>
+            {darkMode ? "Light Mode" : "Dark Mode"}
+          </button>
 
-      <select onChange={(e) => setLoanType(e.target.value)}>
-        <option value="">All Loan Types</option>
-        <option>Home Loan</option>
-        <option>Personal Loan</option>
-        <option>Education Loan</option>
-        <option>Gold Loan</option>
-        <option>Vehicle Loan</option>
-        <option>Business Loan</option>
-      </select>
+          <button className="logout-btn" onClick={logout}>
+            Logout
+          </button>
+        </div>
+      </div>
 
-      <select onChange={(e) => setStatus(e.target.value)}>
-        <option value="">All Status</option>
-        <option>Approved</option>
-        <option>Pending</option>
-        <option>Rejected</option>
-        <option>In Review</option>
-      </select>
+      {/* FILTERS */}
+      <div className="filters">
+        <input
+          placeholder="Search Customer"
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
-      <select onChange={(e) => setCity(e.target.value)}>
-        <option value="">All Cities</option>
-        <option>Delhi</option>
-        <option>Mumbai</option>
-        <option>Ahmedabad</option>
-        <option>Jaipur</option>
-        <option>Surat</option>
-      </select>
+        <select onChange={(e) => setLoanType(e.target.value)}>
+          <option value="">All Loan Types</option>
+          <option>Home Loan</option>
+          <option>Personal Loan</option>
+          <option>Education Loan</option>
+          <option>Gold Loan</option>
+          <option>Vehicle Loan</option>
+          <option>Business Loan</option>
+        </select>
 
-      <input type="date" onChange={(e) => setFromDate(e.target.value)} />
-      <input type="date" onChange={(e) => setToDate(e.target.value)} />
-    </div>
+        <select onChange={(e) => setStatus(e.target.value)}>
+          <option value="">All Status</option>
+          <option>Approved</option>
+          <option>Pending</option>
+          <option>Rejected</option>
+          <option>In Review</option>
+        </select>
 
-    {/* TABLE */}
-    <div className="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Customer Name</th>
-            <th>Loan ID</th>
-            <th>Loan Type</th>
-            <th>Amount</th>
-            <th>Status</th>
-            <th>City</th>
-            <th>Application Date</th>
-            <th>Disbursal Date</th>
-            <th>EMI Due Date</th>
-            <th>Time</th>
-          </tr>
-        </thead>
+        <select onChange={(e) => setCity(e.target.value)}>
+          <option value="">All Cities</option>
+          <option>Delhi</option>
+          <option>Mumbai</option>
+          <option>Ahmedabad</option>
+          <option>Jaipur</option>
+          <option>Surat</option>
+        </select>
 
-        <tbody>
-          {filteredLoans.length === 0 ? (
+        <input type="date" onChange={(e) => setFromDate(e.target.value)} />
+        <input type="date" onChange={(e) => setToDate(e.target.value)} />
+      </div>
+
+      {/* TABLE */}
+      <div className="table-container">
+        <table>
+          <thead>
             <tr>
-              <td colSpan="10" style={{ textAlign: "center" }}>
-                No records found
-              </td>
+              <th>Customer Name</th>
+              <th>Loan ID</th>
+              <th>Loan Type</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>City</th>
+              <th>Application Date</th>
+              <th>Disbursal Date</th>
+              <th>EMI Due Date</th>
+              <th>Time</th>
             </tr>
-          ) : (
-            filteredLoans.map((loan) => (
-              <tr key={loan.id}>
-                <td>{loan.customerName}</td>
-                <td>{loan.loanId}</td>
-                <td>{loan.loanType}</td>
-                <td>{loan.amount}</td>
-                <td>{loan.status}</td>
-                <td>{loan.city}</td>
-                <td>{loan.applicationDate}</td>
-                <td>{loan.disbursalDate ? loan.disbursalDate : "-"}</td>
-                <td>{loan.emiDueDate ? loan.emiDueDate : "-"}</td>
-                <td>{loan.time}</td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
-  </div>
-);
+          </thead>
 
+          <tbody>
+            {filteredLoans.length === 0 ? (
+              <tr>
+                <td colSpan="10" style={{ textAlign: "center" }}>
+                  No records found
+                </td>
+              </tr>
+            ) : (
+              filteredLoans.map((loan) => (
+                <tr key={loan.id}>
+                  <td>{loan.customerName}</td>
+                  <td>{loan.loanId}</td>
+                  <td>{loan.loanType}</td>
+                  <td>{loan.amount}</td>
+                  <td>{loan.status}</td>
+                  <td>{loan.city}</td>
+                  <td>{loan.applicationDate}</td>
+                  <td>{loan.disbursalDate || "-"}</td>
+                  <td>{loan.emiDueDate || "-"}</td>
+                  <td>{loan.time}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default Dashboard;
