@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "../styles/auth.css";
+import "../Styles/auth.css";
 
 const Otp = () => {
   const navigate = useNavigate();
