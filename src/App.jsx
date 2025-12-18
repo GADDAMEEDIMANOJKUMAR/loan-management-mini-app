@@ -5,7 +5,7 @@ import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import Otp from "./Pages/Otp";
 import Dashboard from "./Pages/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 import { initUsers } from "./Utils/Storage";
 import { usersData } from "./Data/users";
