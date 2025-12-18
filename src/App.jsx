@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Otp from "./pages/Otp";
-import Dashboard from "./pages/Dashboard";
+import Login from "./Pages/Login";
+import Signup from "./Pages/Signup";
+import Otp from "./Pages/Otp";
+import Dashboard from "./Pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import { initUsers } from "./Utils/Storage";
