@@ -1,44 +1,101 @@
 # Loan Management Mini App
 
-## Overview
-This project is a frontend-only Loan Management Mini Application built using React.
-It includes user authentication (Signup, Login with OTP) and a dashboard that displays
-loan records with multiple filters.
+## Project Overview
+This is a frontend-only Loan Management application built using React.
+The project includes user authentication (Signup, Login with OTP) and a dashboard
+to view and manage loan records.
 
-All data is managed using browser localStorage. No backend or external APIs are used.
+All data is handled using browser localStorage. No backend or APIs are used,
+as per the assignment requirement.
+
+---
+
+## Setup Instructions
+
+Follow the steps below to run the project locally:
+
+1. Clone the repository
+   git clone https://github.com/GADDAMEEDIMANOJKUMAR/loan-management-mini-app.git
+
+2. Navigate to the project folder
+   cd loan-management-mini-app
+
+3. Install dependencies
+   npm install
+
+4. Start the development server
+   npm run dev
+
+5. Open the application in browser
+   http://localhost:5173
 
 ---
 
 ## Features
 
 ### Authentication
-- Signup with Full Name, Email, Password, Phone, and City
+- User Signup with validation
 - Login using Email and Password
 - OTP verification after login
-- Default OTP used for demo purpose
+- Default demo OTP used for testing
+- Error messages for invalid credentials
 - Logout functionality
 
+### Signup
+- Validation for missing fields
+- Duplicate email check
+- Successful signup confirmation
+
 ### Dashboard
-- Display loan records in a table
-- Search loans by customer name
+- Display loan details in table format
+- Search by customer name
 - Filter by loan type
 - Filter by loan status
 - Filter by city
 - Filter by application date range
-- Optional filter by time
-- Responsive design for mobile and desktop
+- Display application date, disbursal date, EMI due date, and time
+- Logout with success message
 
 ### UI & UX
+- Responsive design (mobile and desktop)
 - Clean and simple user interface
-- Mobile-first responsive layout
 - Toast notifications for user feedback
 
 ---
 
-## Tech Stack
+## Bonus Features Added
+
+- Dark Mode toggle on Dashboard
+- Dark mode preference stored in localStorage
+- Demo OTP displayed on OTP screen for testing
+- Responsive table with horizontal scroll on mobile
+
+---
+
+## Screenshots
+
+- Login Page  
+ ![Login page](Screenshots/Login.png)
+ 
+- Signup Page  
+ ![Signup page](Screenshots/Signup.png)
+
+- OTP Verification Page  
+ ![Otp page](Screenshots/Otp.png)
+
+- Dashboard (Light Mode) 
+ ![Dashboard Light mode](Screenshots/Dashboard-light-mode.png)
+
+- Dashboard (Dark Mode)
+ ![Dashboard Dark mode](Screenshots/Dashboard-Dark-mode.png)
+
+---
+
+## Technologies Used
+
 - React
-- React Router
 - JavaScript
+- React Router
 - CSS
 - localStorage
 
@@ -46,33 +103,22 @@ All data is managed using browser localStorage. No backend or external APIs are 
 
 ## Project Structure
 
-src/
-- pages/ → Login, Signup, OTP, Dashboard
-- data/ → Static users and loan data
-- styles/ → CSS files
-- utils/ → localStorage helper functions
-
----
-
-## How to Run the Project
-
-1. Install dependencies  
-   npm install
-
-2. Start the development server  
-   npm run dev
-
-3. Open in browser  
-   http://localhost:5173
+- pages → Login, Signup, OTP, Dashboard
+- components → ProtectedRoute
+- data → Static users and loan data
+- styles → CSS files
+- utils → localStorage helper functions
 
 ---
 
 ## Notes
-- This project is frontend-only as per assignment requirements.
-- localStorage is used to simulate backend behavior.
-- OTP is fixed for demo and testing purposes.
+
+- This is a frontend-only project created for assignment purposes.
+- localStorage is used to simulate backend functionality.
+- OTP is fixed and shown only for demo/testing.
 
 ---
 
 ## Author
-Manoj Kumar
+
+Manoj Kumar Gaddameedi
